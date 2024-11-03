@@ -1,7 +1,7 @@
 # Welcome!
 Hello, and welcome to Web Pong!
 
-# Credit
+# Credits
 Credit to Brunozhon for making the original version, this is just updated version with a kick of my own!
 
 # Controls
