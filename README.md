@@ -12,5 +12,6 @@ Here's the link to the downloadable version! (it may not work!)
 
 file:///home/chronos/u-7ce57aaa5ff512f11b03bd3e13f962af77a938b6/MyFiles/Pong/WebPong.html
 
+# Copyright info
 
-©2024, By eternalxlks and brunozhon, all rights reserved
+©2024, By eternalxlks and brunozhon, all rights reserved. Under no part of this piece of software may be copied, or distributed as one's own. Read the license for mo information!
