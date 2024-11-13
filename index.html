@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap.min.css">
         <link rel="stylesheet" href="arduino-light.min.css">
-        <title>Web Pong!</title>
+        <title>Web Pong</title>
         <script src="highlight.min.js"></script>
         <script src="javascript.min.js"></script>
         <style>
@@ -23,7 +23,7 @@
         <div class="card m-2">
             <div class="card-body">
                 <h5 class="card-title">Instructions</h5>
-                <p>Use <code>W</code> and <code>S</code> to move Player A (left) and <code>I</code> and <code>K</code> to move Player B.(right)</p>
+                <p>Use <code>W</code> and <code>S</code> to move Player A (left) and <code>I</code> and <code>K</code> to move Player B (right)</p>
             </div>
         </div>
         <div class="card m-2">
@@ -38,26 +38,27 @@
                 <div class="collapse" id="help">
                     <div class="card card-body">
                         <h6>Change Score</h6>
-                        <pre><code class="language-js">scoreA = 1; // Change the score of Player A
-scoreB = 1; // Change the score of player B</code></pre>
+                        <pre><code class="language-js">scoreA = 1; // Change score of player A
+scoreB = 1; // Change score of player B</code></pre>
                         <h6>Change Paddle Properties</h6>
-                        <pre><code class="language-js">// You can switch the paddles around (kind of useless)
+                        <pre><code class="language-js">// You can replace "paddleA" with "paddleB"
 // in these examples.
-paddleA.height = 10; // Change the height!
-paddleA.width = 10; // Change the width!
-paddleA.x = 10; // Change x position (This breaks the game!)
+paddleA.height = 10; // Change height
+paddleA.width = 10; // Change width
+paddleA.x = 10; // Change x position (breaks the game!)
 paddleA.y = 10; // Change y position</code></pre>
                         <h6>Change Ball Properties</h6>
-                        <pre><code class="language-js">x = 10; // change x position
-dx = 5; // horizontal speed (resets when someone loses)
-dy = 5; // vertical speed (resets too!)</code></pre>
-                        <h6>Useful Functions!</h6>
+                        <pre><code class="language-js">x = 10; // x position
+y = 10; // y position
+dx = 5; // horizontal speed (resets when you touch the wall)
+dy = 5; // vertical speed (also resets)</code></pre>
+                        <h6>Useful Constants & Functions</h6>
                         <pre><code class="language-js">canvas // HTML canvas element
-canvas.width // Make Bigger!
-canvas.height // Make Smaller!
+canvas.width // Canvas width
+canvas.height // Canvas height
 
-alert() // Display using an annoying popup window.
-document.write() // Display, but replaces the whole website.</code></pre>
+alert() // Display stuff using an annoying popup window.
+document.write() // Display stuff, but replaces the whole website.</code></pre>
                     </div>
                 </div>
                 <input id="terminal" class="form-control mt-1 mb-1">
@@ -65,22 +66,22 @@ document.write() // Display, but replaces the whole website.</code></pre>
             </form>
         </div>
         <script>
-            // Build
+            // Canvas constants
             const canvas = document.getElementById("canvas");
             const ctx = canvas.getContext("2d");
 
-            // Base Scores
+            // Scores
             let scoreA = 0;
             let scoreB = 0;
 
-            // Ball 
+            // Ball variables
             const ballRadius = 10;
             let x = canvas.width / 2;
             let y = Math.floor(Math.random() * (canvas.height - 20)) + 10;
             let dx = 4;
             let dy = -4;
             
-            // Paddles
+            // Paddle constructor
             function Paddle(height, width, x, upKey, downKey) {
                 // Properties
                 this.height = height;
@@ -88,7 +89,7 @@ document.write() // Display, but replaces the whole website.</code></pre>
                 this.x = x;
                 this.y = canvas.height / 2 - this.height / 2;
 
-                // Keys
+                // Key pressed
                 this.upPressed = false;
                 this.downPressed = false;
 
@@ -104,7 +105,7 @@ document.write() // Display, but replaces the whole website.</code></pre>
                     ctx.closePath();
                 };
                 
-                // Handlers
+                // Event handlers
                 document.addEventListener("keydown", (e) => {
                     if (e.key == upKey) {
                         this.upPressed = true;
@@ -122,7 +123,7 @@ document.write() // Display, but replaces the whole website.</code></pre>
                 }, false);
             }
 
-            // Paddles 2 
+            // Paddles
             const paddleA = new Paddle(100, 10, 0, "w", "s");
             const paddleB = new Paddle(100, 10, canvas.width - 10, "i", "k");
 
@@ -134,11 +135,11 @@ document.write() // Display, but replaces the whole website.</code></pre>
                 ctx.fill();
                 ctx.closePath();
                 
-                // Reset Ball
+                // Update the ball's position
                 x += dx;
                 y += dy;
 
-                // Bounce the ball!
+                // Bounce the ball if it hits the edge of the canvas
                 if (y + dy < ballRadius) dy = -dy;
                 if (y + dy > canvas.height - ballRadius) dy = -dy;
 
@@ -166,7 +167,7 @@ document.write() // Display, but replaces the whole website.</code></pre>
                 dy = -4;
             }
 
-            // Score!
+            // Draws the score
             function drawScore() {
                 ctx.font = "16px Arial";
                 ctx.fillStyle = "#000000";
@@ -175,32 +176,32 @@ document.write() // Display, but replaces the whole website.</code></pre>
             }
 
             function draw() {
-                // Reset everything
+                // Clear the canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 // Draw the score
                 drawScore();
 
-                // Draw ball
+                // Draw the ball
                 drawBall();
 
                 // Draw the paddles
                 paddleA.draw();
                 paddleB.draw();
 
-                // Request animation frame
+                // Request an animation frame
                 requestAnimationFrame(draw);
             }
 
             draw();
 
-            // Gyatt
+            // Terminal
             document.getElementById("execute").addEventListener("click", function() {
                 const value = document.getElementById("terminal").value;
                 eval(value);
             });
 
-            // Paste code into game!
+            // Reroute enter key presses to click the "Hack!" button
             document.querySelector("form").addEventListener("submit", function(e) {
                 e.preventDefault();
                 document.getElementById("execute").click();
