@@ -5,7 +5,7 @@ Hello, and welcome to Web Pong!
 Credit to brunozhon for making the original version, this is just updated version with a kick of my own!
 
 # Controls
-You must full screen the tab, and then you use W and S to move paddle A, and up arrow key and down arrow key for paddle B.
+ You use W and S to move paddle A, and up arrow key and down arrow key for paddle B.
 
 # Downloadable Version!
 Here's the link to the downloadable version! (it may not work!)
